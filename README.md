@@ -1,6 +1,6 @@
 # Web Shortcus
 
-Web-Shotcuts is pure javascript library which provide easy acess for `website, complex options, and path` in shortcut way.
+Web-Shotcuts is pure javascript library which provide easy acess for `website, complex options, and path` in shortcut way. No dependency needed.
 
 ## INDEX
 
@@ -26,6 +26,8 @@ import { Shortcuts, Shortcut, KEYS, addKeys } from '@djimprove/Web-Shortcut';
 ```
 
 ## How to use
+
+#### Note: if you want add shortcut on document please add in body means on actual element. On discard browser shortcut conflicts stop event buble and propogation after handle callback.
 
 ## Create multiple shortcuts
 
@@ -65,7 +67,7 @@ new ShortCut(
 );
 ```
 
-## API Guids
+## API Guide
 
 ### Shortcut API
 
@@ -121,6 +123,8 @@ This only takes `[]` of Shortcut
 - `push(shortCuts?: ShortCut[]): ShortCut[]`<br/>
   1. Takes list of multiple `Shortcut[]` and add provided shortcuts in pre-existing list.<br/>
   2. Return list of `Shortcuts`
+- `getShortCutByName(sName: string): ShortCut`<br/>
+  1. return shortcut if it exist.
 - `removeAll(): boolean`
   1. It will remove all shortcuts.
   2. return boolean `true | flase`
