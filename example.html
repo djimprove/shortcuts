@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body id="body" class="bg-gray-50 flex border h-screen w-screen">
+    <div class="flex flex-col h-full w-full">
+      <header
+        class="text-5xl flex justify-between items-center mb-4 bg-blue-400 text-white p-4"
+      >
+        <span>Demo Shortcut</span>
+        <input
+          class="w-2/5 text-sm p-1 mr-2 rounded focus:ring ring-blue-400"
+          id="g-search"
+          type="search"
+          placeholder="Search:[ctrl+Q]"
+        />
+        <button
+          class="text-sm border relative text-center p-1 px-2 hover:bg-blue-600 rounded"
+        >
+          Shortcuts List [ctrl+shift+s]
+
+          <ul
+            id="shortcut-menu"
+            class="bg-white text-gray-600 shadow-lg absolute left-0 mt-1 p-1 rounded w-full hidden"
+          >
+            <li class="hover:bg-gray-200">
+              <a id="homeLink" href="#home">Home: [ctrl+a]</a>
+            </li>
+            <li>
+              <a id="aboutLink" href="#about">
+                About: [ctrl+b]
+              </a>
+            </li>
+          </ul>
+        </button>
+      </header>
+
+      <main class="flex-1 border">
+        <div class="flex">
+          <aside class="w-44"></aside>
+          <div class="w-screen h-screen flex justify-center items-center">
+            <ul class="list  space-y-4">
+              <li class="">
+                <span class="text-gray-600 mr-2">Go to home page</span>
+                <span
+                  class="col-span-1 bg-blue-500 text-white rounded px-2 py-1"
+                  >ctrl+a</span
+                >
+              </li>
+              <li class="">
+                <span class="text-gray-600 mr-2">Go to about page </span>
+                <span
+                  class="col-span-1 bg-blue-500 text-white rounded px-2 py-1"
+                  >ctrl+b</span
+                >
+              </li>
+              <li class="">
+                <span class="text-gray-600 mr-2">Shortcut List press </span>
+                <span
+                  class="col-span-1 bg-blue-500 text-white rounded px-2 py-1"
+                  >ctrl+shift+s</span
+                >
+              </li>
+              <li class="">
+                <span class="text-gray-600 mr-2">Shortcut List press </span>
+                <span
+                  class="col-span-1 bg-blue-500 text-white rounded px-2 py-1"
+                  >ctrl+shift+s</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          id="home"
+          class="w-screen h-screen bg-blue-400 flex items-center justify-center"
+        >
+          <h1 class="text-3xl">Home</h1>
+        </div>
+
+        <div
+          id="about"
+          class="h-screen w-screen flex items-center justify-center"
+        >
+          <h1 class="text-3xl">About</h1>
+        </div>
+      </main>
+      <footer class="h-20 bg-gray-100">footer</footer>
+    </div>
+  </body>
+  <script type="module">
+    import w from './dist/web-shortcut.esm.js';
+
+    console.log(w);
+    const { KEYS, ShortCut, ShortCuts, addKeys } = w;
+    const shortcuts = new ShortCuts([
+      new ShortCut(
+        document.getElementById('body'),
+        'keydown',
+        e => {
+          const menu = document.getElementById('shortcut-menu');
+          menu.classList.toggle(['hidden']);
+        },
+        [KEYS.Ctrl, KEYS.Shift, KEYS.s],
+        'menu'
+      ),
+      new ShortCut(
+        document.getElementById('body'),
+        'keydown',
+        e => {
+          // if (confirm('Press a button! home page\nEither OK or Cancel.')) {
+          document.getElementById('homeLink').click();
+          e.preventDefault();
+          e.stopPropagation();
+          // }
+        },
+        [KEYS.Ctrl, KEYS.a],
+        'about'
+      ),
+      new ShortCut(
+        document.getElementById('body'),
+        'keydown',
+        e => {
+          // if (confirm('Press a button about page!\nEither OK or Cancel.')) {
+          document.getElementById('aboutLink').click();
+          // }
+        },
+        [KEYS.Ctrl, KEYS.b],
+        'about'
+      ),
+      new ShortCut(
+        document.getElementById('body'),
+        'keydown',
+        e => {
+          // if (confirm('Press a button about page!\nEither OK or Cancel.')) {
+          document.getElementById('g-search').focus();
+          // }
+        },
+        [KEYS.Ctrl, KEYS.q],
+        'g-search'
+      ),
+    ]);
+
+    console.log(shortcuts.getShortCutByName('g-search'));
+    // shortcuts.removeAll();
+  </script>
+</html>

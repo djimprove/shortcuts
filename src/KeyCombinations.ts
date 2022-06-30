@@ -26,8 +26,12 @@ class KeyCombination {
     return this.keysSatisFied;
   }
 
-  isKeysSatisFied(): boolean {
-    return Object.values(this.keysSatisFied).findIndex(v => v === false) < 0;
+  isKeysSatisFied(evtKeys: number[]): boolean {
+    const keys = Object.keys(this.keysSatisFied);
+    if (evtKeys.length === keys.length) {
+      return keys.every(key => evtKeys.includes(parseInt(key)));
+    }
+    return false;
   }
   resetKeys(): void {
     Object.keys(this.keysSatisFied).forEach(e => {

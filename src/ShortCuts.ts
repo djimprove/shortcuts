@@ -10,6 +10,9 @@ class ShortCuts {
     this.shortCuts.push(...shortCuts);
     return this.shortCuts;
   }
+  getShortCutByName(sName: string) {
+    return this.shortCuts?.find(s => s.name === sName);
+  }
 
   removeAll(): boolean {
     this.shortCuts.forEach((shortCut: ShortCut) => {

@@ -1,4 +1,5 @@
 import { KeyCombination } from './KeyCombinations.js';
+import { getKeysFromEvents } from './utils.js';
 
 class ShortCut {
   // element
@@ -40,21 +41,19 @@ class ShortCut {
   };
 
   listner = (e: any): boolean => {
-    e.preventDefault();
-    e.stopPropagation();
-
     if (this.timeOut) {
       clearTimeout(this.timeOut);
     }
-    this.timeOut = setTimeout(this.handleTimeout, 500);
+    this.timeOut = setTimeout(this.handleTimeout);
 
-    this.keyCombination?.addKey(e.keyCode || e.which || e.charCode);
-    if (this.keyCombination?.isKeysSatisFied()) {
-      /* 
+    if (this.keyCombination?.isKeysSatisFied(getKeysFromEvents(e))) {
+      /*
           if event orignated from self 
         */
       if (this.onlySelf && this.callBack) {
-        this.domEle === e.target && this.callBack(e, this);
+        if (this.domEle === e.target) {
+          this.callBack(e, this);
+        }
       } else {
         this.callBack(e, this);
       }
